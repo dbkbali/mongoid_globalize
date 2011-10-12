@@ -98,10 +98,14 @@ describe Mongoid::Globalize do
 
   describe "#destroy" do
     it "destroys dependent translations" do
+      post = Post.create(:title => "foo", :content => "bar")
+      post.reload
+      post.title.should eql "foo"
+      post.delete.should be_true
       # it's true due to translations are embedded into document
     end
   end
-
+  
   describe "#to_xml" do
     it "includes translated fields" do
       post = Post.create(:title => "foo", :content => "bar")
