@@ -87,7 +87,19 @@ describe "Validations" do
     end
   end
 
-  pending "validates_uniqueness_of"
+  describe "validates_uniqueness_of" do
+    before (:each) do
+      Validatee.create(:string => "ABC")
+    end
+    
+    it "works" do
+      Validatee.class_eval{validates_uniqueness_of :string}
+      Validatee.new(:string => "ABC").should_not be_valid
+      Validatee.new(:string => "DEF").should be_valid
+    end
+  end
+
+  #pending "validates_uniqueness_of"
   pending "validates_associated"
   pending "a record with valid values on non-default locale validates"
 end

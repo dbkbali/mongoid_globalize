@@ -14,7 +14,7 @@ module Mongoid::Globalize
     # @attributes.
     # Return: Hash
     def attributes
-      unless @stop_merging_translated_attributes
+      unless @stop_merging_translated_attributes || @attributes.frozen?
         @attributes.merge! translated_attributes
       end
       super
@@ -181,7 +181,7 @@ module Mongoid::Globalize
       @stop_merging_translated_attributes = true
       translated_attribute_names.each do |name|
         @attributes.delete name.to_s
-        @changed_attributes.delete name.to_s
+        @changed_attributes.delete name.to_s if !@changed_attributes.nil?
       end
       globalize.prepare_translations!
     end

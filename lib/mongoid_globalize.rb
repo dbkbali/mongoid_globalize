@@ -29,7 +29,8 @@ module Mongoid::Globalize
   included do
     class_attribute :translated_attribute_names, :fallbacks_for_empty_translations
     self.translated_attribute_names = []
-    embeds_many :translations, :class_name  => translation_class.name
+    embeds_many :translations, :class_name  => translation_class.name    
+    
     before_save :prepare_translations!
     after_save :clear_translations!
 
